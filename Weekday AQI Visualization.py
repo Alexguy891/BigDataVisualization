@@ -48,7 +48,7 @@ fig, ax = plt.subplots(figsize = (12, 9))
 ax.hlines(y=hours, xmin = ppm25_2022, xmax = ppm25_2023, color = 'b', zorder = 1)
 ax.plot(ppm25_2023, hours, 'bo', label='Today\'s Air Quality', markersize = 10, linewidth = 10)
 ax.plot(ppm25_2022, hours, 'go', label='One Year Ago', markersize = 10, linewidth = 10)
-ax.legend(loc = 'upper right', borderpad = 1, fontsize = 15, framealpha = 1)
+ax.legend(loc = 'best', borderpad = 1, fontsize = 15, framealpha = 1)
 
 #Label Graph
 #This will return an error if xticks is not the same length of xticklabels or yticks is not the same length as yticktables
@@ -59,7 +59,7 @@ ax.set_xticklabels(["Good", "Moderate", "Unhealthy \n for Sensitive \n Groups", 
 ax.set_yticks(hours)
 ax.set_yticklabels(["8:00pm", "7:00pm", "6:00pm", "5:00pm", "4:00pm", "3:00pm", "2:00pm", "1:00pm", "12:00pm", "11:00am", "10:00am", "9:00am", "8:00am"], fontsize = 11)
 
-ax.set_title('Today At A Glance', fontsize = 20)
+ax.set_title('Today\'s Air Quality At A Glance', fontsize = 20)
 
 # hex codes are taken directly from NOAA manual 
 ax.axvspan(0, 12.0, facecolor = "#00e400", alpha = 0.5)
