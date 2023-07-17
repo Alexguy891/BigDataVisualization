@@ -69,5 +69,11 @@ ax.axvspan(55.4, 150.4, facecolor = "#ff0000", alpha = 0.5)
 ax.axvspan(150.4, 250.4, facecolor = "#8f3f97", alpha = 0.5)
 ax.axvspan(250.4, 420.0, facecolor = "#7e0023", alpha = 0.5)
 
+bbox_props = dict(boxstyle = "square,pad=0.3", facecolor = "#FBF5FF", alpha = 1, edgecolor = "#7e0023", lw = 2)
+
+ax.text(335.25, 13, "Hazardous: Emergency Conditions. \n Entire population impacted. \n All may experience serious health effects. \nAvoid all outdoor activities.", fontweight = "extra bold", transform = ax.transData, fontsize = 10, verticalalignment = "center", horizontalalignment = "center", bbox = bbox_props, zorder = 3)
+
+
+
 plt.tight_layout(pad = 2.0)
 plt.show()
