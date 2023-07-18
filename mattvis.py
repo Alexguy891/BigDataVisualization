@@ -2,6 +2,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from Requests import get_parameter_value
 import datetime
+def plot_data(data1, data2):
+    # Assuming data1 and data2 lists of tuples as shown previously
+    values1 = [value for value, unit in data1]
+    values2 = [value for value, unit in data2]
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(1, len(values1) + 1), values1, label='2022')  # plot for the first month
+    plt.plot(range(1, len(values2) + 1), values2, label='2023')  # plot for the second month
+    plt.xlabel('Days')
+    plt.ylabel('pm25 levels')
+    plt.title('Comparison of pm25 levels over the month of June during 2022 and 2023 in NYC')
+    plt.legend()
+
+    plt.show()
+
 def get_monthly_pm25_data(start_date):
     formatted_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
 
@@ -19,10 +34,9 @@ def get_monthly_pm25_data(start_date):
         formatted_date += datetime.timedelta(days=1)
 
     return data
+
+
 #Requests must have an uppercase R, otherwise it will import requests library
-data = get_monthly_pm25_data('2023-06-01')
-for value, unit in data:
-    print("Value: ", value, "Unit: ", unit)
-value, unit = get_parameter_value('12', '06', '07', '2023', 'pm25')
-       
-print(value, unit)
+data1 = get_monthly_pm25_data('2022-06-01')
+data2 = get_monthly_pm25_data('2023-06-01')
+plot_data(data1, data2)
