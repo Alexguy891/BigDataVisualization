@@ -98,7 +98,7 @@ def get_parameter_value(hour, month, day, year, parameter):
             for entry in result:
                 for entry2 in entry:
                     if 'date' in entry2 and 'parameter' in entry2 and 'value' in entry2 and 'unit' in entry2:
-                        if entry2['date']['utc'] == f"{year}-{month}-{day}T{hour}:00:00+00:00":
+                        if entry2['date']['utc'] == f"{year}-{month}-{day}T{hour}:00:00+00:00" and entry2['parameter'] == parameter:
                             return entry2['value'], entry2['unit']
 
     # return error value if not found                    
@@ -106,7 +106,7 @@ def get_parameter_value(hour, month, day, year, parameter):
 
 # main function
 def main():
-    print("Hello, world!")
+   print(get_parameter_value('12','06','07','2022','pm25'))
 
 # for main function execution
 if __name__ == "__main__":
