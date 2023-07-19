@@ -103,11 +103,3 @@ def get_parameter_value(hour, month, day, year, parameter):
 
     # return error value if not found                    
     return 0, "error"
-
-# main function
-def main():
-   print(get_parameter_value('12','06','07','2022','pm25'))
-
-# for main function execution
-if __name__ == "__main__":
-    main()
