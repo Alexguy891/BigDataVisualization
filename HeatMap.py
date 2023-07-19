@@ -15,6 +15,7 @@ daily_readings = np.array([[1, 12, 26, 52, 120, 200, 400],
                            [111, 222, 442, 330, 124, 124, 499], 
                            [66, 77, 100, 99, 200, 127, 124]])
 '''
+hours = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
 
 #Literally Matt's get_monthly_pm25_data edited for 7 days 
 def get_weekly_pm25_data(start_date):
@@ -24,18 +25,27 @@ def get_weekly_pm25_data(start_date):
     end_date = formatted_date + datetime.timedelta(days=6)
 
     data = []
+    hours = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+
 
     while formatted_date <= end_date:
         day = formatted_date.strftime('%d')
         month = formatted_date.strftime('%m')
         year = formatted_date.strftime('%Y')
-        value, unit = get_parameter_value("12", month, day, year, "pm25")
-        data.append(value)
+
+        highest_value = 0
+
+        for i in range(len(hours)): 
+            temp_value, unit = get_parameter_value(hours[i], month, day, year, "pm25")
+            if temp_value > highest_value: 
+                highest_value = temp_value
+        data.append(highest_value)
 
         formatted_date += datetime.timedelta(days=1)
 
     return data
 
+#00, 01, 02, 03, 08, 
 
 #create three 1-dimention array 
 week_1 = get_weekly_pm25_data("2023-06-04")
@@ -55,6 +65,7 @@ fig, ax = plt.subplots(figsize = (10, 10))
 im = ax.imshow(daily_readings, cmap = noaa_colormap, norm = noaa_color_category)
 
 #set labels
+ax.set_title("Maximum Daily PM2.5 Level", fontsize = 18, pad = 20.0)
 ax.set_yticks(np.arange(len(weeks_observed)), labels = weeks_observed)
 ax.set_xticks(np.arange(len(days_in_week)), labels = days_in_week)
 ax.tick_params(top = True, labeltop = True, bottom = False, labelbottom = False)
