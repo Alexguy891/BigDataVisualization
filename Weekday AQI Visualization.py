@@ -1,44 +1,42 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import datetime
 from Requests import get_parameter_value
 
 #Requests must have an uppercase R, otherwise it will import requests library
 
+def get_hourly_pm25_data(start_time):
+    formatted_time = datetime.datetime.strptime(start_time, '%H-%Y-%m-%d')
 
-"""debug note: if the length of hours, aqi2023, and aqi2022 do not all match, the code will throw a an error that reads
-   'ValueError: could not broadcast input array from shape (#,) into shape (#,)' 
-   This can be corrected by making sure the arrays are the same length.
-"""
+    end_time = formatted_time + datetime.timedelta(hours=12)
+
+    data = []
+
+    while formatted_time <= end_time:
+        hour = formatted_time.strftime('%H')
+        day = formatted_time.strftime('%d')
+        month = formatted_time.strftime('%m')
+        year = formatted_time.strftime('%Y')
+        value, unit = get_parameter_value(hour, month, day, year, "pm25")
+        data.append((value))
+
+        formatted_time+= datetime.timedelta(hours=1)
+    return data
 
 
-def get_hourly_reading(start_hour, hours_needed, start_month, start_day, start_year):
-   hourly_ppm25 = []
+test_data = get_hourly_pm25_data("08-2023-06-07")
+print(test_data)
+test_data_2022 = get_hourly_pm25_data("08-2022-06-07")
 
-   for i in range(hours_needed):
-      current_hour = start_hour + i
 
-      #convert int current_hour to string format used in get_parameter_value
-      if current_hour < 10:
-         current_hour_string = "0" + str(current_hour)
-      else:
-         current_hour_string = str(current_hour)
-
-      current_ppm25, unit = get_parameter_value(current_hour_string, start_month, start_day, start_year, "pm25")
-      hourly_ppm25.append(current_ppm25)
-   
-   return hourly_ppm25
-      
 # create a range of hours across a weekday
 hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 number_of_hours = len(hours)
 
-ppm25_2023 = get_hourly_reading(8, number_of_hours, "06", "07", "2023")
-ppm25_2022 = get_hourly_reading(8, number_of_hours, "06", "07", "2022")
 
-
-#dummy data that shows higher levels in 2023 than 2022
-#aqi2023 = [232, 216, 159, 125, 98.6, 86.7, 82.3, 71.4, 65.2, 50, 51, 44, 100]
-#aqi2022 = np.random.randint(10, 50, size = len(hours)) 
+#Get data
+ppm25_2023 = get_hourly_pm25_data("08-2023-06-07")
+ppm25_2022 = get_hourly_pm25_data("08-2022-06-07") 
 
 
 fig, ax = plt.subplots(figsize = (12, 9))
